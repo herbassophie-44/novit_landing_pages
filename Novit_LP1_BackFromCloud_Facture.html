@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novit — Back from Cloud · Version facture</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #F7F8FA;
+    color: #1A1A2E;
+  }
+
+  /* NAV */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid #E8ECF0;
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo { font-size: 20px; font-weight: 700; color: #185FA5; letter-spacing: -0.5px; }
+  .nav-cta {
+    background: #185FA5;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0D3D6E 0%, #185FA5 60%, #1A7ABF 100%);
+    padding: 72px 48px 64px;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 64px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero-left { color: #fff; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: #9DCFFF;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 span { color: #FFB547; }
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; flex-shrink: 0; }
+
+  /* FORM CARD */
+  .form-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .form-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1A1A2E;
+    margin-bottom: 6px;
+  }
+  .form-card p {
+    font-size: 13px;
+    color: #6B7280;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .form-group { margin-bottom: 14px; }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #1A1A2E;
+    background: #FAFAFA;
+    outline: none;
+    font-family: inherit;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-submit {
+    width: 100%;
+    background: #185FA5;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .form-note {
+    text-align: center;
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-top: 10px;
+  }
+
+  /* WRAPPER */
+  .wrapper { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+  /* STATS */
+  .stats {
+    background: #fff;
+    border-bottom: 1px solid #E8ECF0;
+  }
+  .stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: #185FA5;
+    letter-spacing: -1px;
+  }
+  .stat-label { font-size: 13px; color: #6B7280; margin-top: 4px; line-height: 1.4; }
+
+  /* SECTION */
+  section { padding: 72px 0; }
+  .section-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #185FA5;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 48px;
+    max-width: 520px;
+    line-height: 1.3;
+  }
+
+  /* BEFORE AFTER */
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #E5E7EB;
+  }
+  .ba-col { padding: 32px; }
+  .ba-before { background: #FEF2F2; }
+  .ba-after { background: #F0FDF4; border-left: 1px solid #E5E7EB; }
+  .ba-header {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ba-before .ba-header { color: #DC2626; }
+  .ba-after .ba-header { color: #16A34A; }
+  .ba-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .ba-before .ba-item { color: #7F1D1D; }
+  .ba-after .ba-item { color: #14532D; }
+  .ba-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ARGUMENTS */
+  .args-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .arg-card {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 28px;
+  }
+  .arg-icon {
+    width: 44px;
+    height: 44px;
+    background: #EFF6FF;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .arg-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .arg-desc { font-size: 14px; color: #6B7280; line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .testi-card {
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    padding: 28px;
+  }
+  .testi-quote {
+    font-size: 15px;
+    line-height: 1.65;
+    color: #374151;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #DBEAFE;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #1D4ED8;
+  }
+  .testi-name { font-size: 13px; font-weight: 600; }
+  .testi-role { font-size: 12px; color: #9CA3AF; }
+
+  /* CREDIBILITY */
+  .cred-section { background: #1A1A2E; padding: 48px 0; }
+  .cred-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    text-align: center;
+  }
+  .cred-item { color: #fff; }
+  .cred-icon { font-size: 28px; margin-bottom: 10px; }
+  .cred-label { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.4; }
+
+  /* FAQ */
+  .faq-list { max-width: 720px; }
+  .faq-item {
+    border-bottom: 1px solid #E5E7EB;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .faq-q { font-size: 15px; font-weight: 500; color: #1A1A2E; }
+  .faq-chevron { color: #9CA3AF; font-size: 18px; }
+
+  /* CTA FINAL */
+  .cta-final {
+    background: linear-gradient(135deg, #185FA5, #0D3D6E);
+    padding: 72px 48px;
+    text-align: center;
+    color: #fff;
+  }
+  .cta-final h2 { font-size: 30px; font-weight: 700; margin-bottom: 12px; }
+  .cta-final p { font-size: 16px; color: rgba(255,255,255,0.75); margin-bottom: 32px; }
+  .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: #fff;
+    color: #185FA5;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  /* VISUAL PLACEHOLDER */
+  .visual-placeholder {
+    background: #EFF6FF;
+    border: 2px dashed #93C5FD;
+    border-radius: 10px;
+    padding: 32px;
+    text-align: center;
+    color: #3B82F6;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+  .visual-placeholder strong { display: block; font-size: 15px; margin-bottom: 6px; }
+
+  footer { background: #1A1A2E; color: rgba(255,255,255,0.4); padding: 24px 48px; font-size: 13px; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">novit.io</span>
+  <button class="nav-cta">Demander un audit</button>
+</nav>
+
+<!-- HERO SECTION -->
+<div style="background: linear-gradient(135deg, #0D3D6E 0%, #185FA5 60%, #1A7ABF 100%);">
+  <div class="hero">
+    <div class="hero-left">
+      <span class="hero-eyebrow">Back from Cloud</span>
+      <h1>Vos coûts cloud érodent<br>votre rentabilité.<br><span>Reprenez la maîtrise.</span></h1>
+      <p class="hero-sub">Infrastructure cloud-native déployée sur vos propres serveurs. Les performances du cloud public, à moitié du coût, avec une souveraineté totale.</p>
+      <div class="hero-badges">
+        <div class="badge"><span class="badge-dot"></span> Aucune dépendance AWS, Azure ou GCP</div>
+        <div class="badge"><span class="badge-dot"></span> Opérationnel en moins d'1 semaine</div>
+        <div class="badge"><span class="badge-dot"></span> Ingénieurs français H24/7</div>
+      </div>
+    </div>
+    <!-- FORM -->
+    <div class="form-card">
+      <h3>Envoyez votre facture cloud</h3>
+      <p>Un ingénieur analyse votre facture et vous présente une modélisation d'économies personnalisée en 48h. Gratuit, sans engagement.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" placeholder="Jean">
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" placeholder="Martin">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email professionnel</label>
+        <input type="email" placeholder="jean.martin@entreprise.fr">
+      </div>
+      <div class="form-group">
+        <label>Entreprise</label>
+        <input type="text" placeholder="Nom de votre société">
+      </div>
+      <div class="form-group">
+        <label>Votre facture cloud (AWS, Azure, GCP…)</label>
+        <div style="border: 2px dashed #BFDBFE; border-radius: 8px; padding: 20px; text-align: center; background: #EFF6FF; cursor: pointer;">
+          <div style="font-size: 28px; margin-bottom: 8px;">☁️</div>
+          <div style="font-size: 13px; font-weight: 600; color: #1D4ED8; margin-bottom: 4px;">Glissez votre facture ici</div>
+          <div style="font-size: 12px; color: #6B7280;">ou cliquez pour sélectionner un fichier · PDF, PNG, JPG</div>
+          <div style="font-size: 11px; color: #9CA3AF; margin-top: 8px;">Vous pouvez anonymiser les informations sensibles avant envoi</div>
+        </div>
+      </div>
+      <button class="form-submit">Un ingénieur vous présente vos économies →</button>
+      <p class="form-note">Gratuit · Sans engagement · Données confidentielles · Réponse sous 48h</p>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-number">-80%</div>
+      <div class="stat-label">d'OPEX pour nos<br>clients SaaS</div>
+    </div>
+    <div>
+      <div class="stat-number">&lt; 1 sem.</div>
+      <div class="stat-label">pour être<br>opérationnel</div>
+    </div>
+    <div>
+      <div class="stat-number">8 ans</div>
+      <div class="stat-label">de solution en<br>production</div>
+    </div>
+    <div>
+      <div class="stat-number">&lt; 1h</div>
+      <div class="stat-label">délai d'intervention<br>ingénieur</div>
+    </div>
+  </div>
+</div>
+
+<!-- VISUAL RECOMMENDATION -->
+<div class="wrapper">
+  <section>
+    <div class="visual-placeholder">
+      <strong>📸 Recommandation visuelle pour cette section</strong>
+      Idéal : une capture de facture AWS/Azure floutée à gauche (symbolisant la dépendance et les coûts incontrôlés), et à droite un dashboard sobre montrant un budget fixe et prévisible. Ou une photo d'une salle serveur en datacenter français — renforce la crédibilité "on-premise, souverain".
+    </div>
+
+    <!-- AVANT / APRÈS -->
+    <div class="section-eyebrow">Transformation</div>
+    <div class="section-title">Ce qui change quand vous migrez avec Novit</div>
+    <div class="ba-grid">
+      <div class="ba-col ba-before">
+        <div class="ba-header">❌ Avant</div>
+        <div class="ba-item"><span class="ba-icon">💸</span><span>Facturation variable et imprévisible — mauvaises surprises en fin de mois</span></div>
+        <div class="ba-item"><span class="ba-icon">🔒</span><span>Dépendance totale aux hyperscalers américains, impossible de migrer</span></div>
+        <div class="ba-item"><span class="ba-icon">🤖</span><span>Support : forums, chatbots, aucun humain disponible rapidement</span></div>
+        <div class="ba-item"><span class="ba-icon">⏳</span><span>Déploiement infra : 18 mois et 1,5 M€ si fait en interne</span></div>
+      </div>
+      <div class="ba-col ba-after">
+        <div class="ba-header">✅ Après</div>
+        <div class="ba-item"><span class="ba-icon">📊</span><span>Budget fixe ~1 000 €/mois (serveurs + abonnement Novit)</span></div>
+        <div class="ba-item"><span class="ba-icon">🔓</span><span>Indépendance totale — changement d'hébergeur en quelques heures</span></div>
+        <div class="ba-item"><span class="ba-icon">🧑‍💻</span><span>Ingénieur français dédié, intervention garantie en moins d'1h</span></div>
+        <div class="ba-item"><span class="ba-icon">⚡</span><span>Déploiement complet en quelques jours, formation des équipes incluse</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARGUMENTS -->
+  <section style="padding-top: 0;">
+    <div class="section-eyebrow">Pourquoi Novit</div>
+    <div class="section-title">4 raisons de migrer hors du cloud public</div>
+    <div class="args-grid">
+      <div class="arg-card">
+        <div class="arg-icon">💶</div>
+        <div class="arg-title">Coûts réduits de 66 à 80 %</div>
+        <div class="arg-desc">Vos coûts cloud représentent jusqu'à 50 % de vos charges opérationnelles. Novit les réduit structurellement, pas cosmétiquement.</div>
+      </div>
+      <div class="arg-card">
+        <div class="arg-icon">⚡</div>
+        <div class="arg-title">Opérationnel en moins d'une semaine</div>
+        <div class="arg-desc">Pas 18 mois. Pas 1,5 M€. Votre plateforme Kubernetes est déployée sur vos serveurs en quelques jours, formation incluse.</div>
+      </div>
+      <div class="arg-card">
+        <div class="arg-icon">🔓</div>
+        <div class="arg-title">Aucun vendor lock-in</div>
+        <div class="arg-desc">100 % open source. Vous pouvez changer d'hébergeur en quelques heures. Novit ne vous rend pas dépendant — c'est son modèle.</div>
+      </div>
+      <div class="arg-card">
+        <div class="arg-icon">🇫🇷</div>
+        <div class="arg-title">Support humain, en France</div>
+        <div class="arg-desc">Un ingénieur français intervient en moins d'1h. Pas un chatbot, pas un forum — quelqu'un qui connaît votre infrastructure.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TESTIMONIALS -->
+<div style="background: #F7F8FA; padding: 72px 0;">
+  <div class="wrapper" style="padding: 0 48px;">
+    <div class="section-eyebrow">Témoignages</div>
+    <div class="section-title" style="margin-bottom: 40px;">Ce que disent nos clients</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">« Nous avons réduit nos coûts d'exploitation de plus de 80 % en quelques semaines. L'équipe Novit a géré toute la migration sans interrompre notre production. »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Mathieu</div>
+            <div class="testi-role">CEO — Startup SaaS, 100 déploiements/jour</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">« On avait des contraintes on-premise strictes. Novit a déployé notre plateforme cloud-native sur nos propres serveurs, sans équipe dédiée de notre côté. »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">T</div>
+          <div>
+            <div class="testi-name">Thomas</div>
+            <div class="testi-role">DSI — ETI industrielle</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">« La sortie des cycles en V que nous n'arrivions pas à faire en interne depuis 3 ans. Novit l'a fait en quelques semaines avec une équipe restreinte. »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">Ma</div>
+          <div>
+            <div class="testi-name">Marion</div>
+            <div class="testi-role">DSI — GE Énergie</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREDIBILITY -->
+<div class="cred-section">
+  <div class="cred-inner">
+    <div class="cred-item">
+      <div class="cred-icon">📅</div>
+      <div class="cred-label">8 ans de solution<br>en production</div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">🏆</div>
+      <div class="cred-label">Core member<br>Kubernetes — Mikael Cluseau</div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">🤝</div>
+      <div class="cred-label">Partenariat<br>Deloitte</div>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">🕐</div>
+      <div class="cred-label">Support H24/7<br>ingénieurs français</div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="wrapper">
+  <section>
+    <div class="section-eyebrow">Questions fréquentes</div>
+    <div class="section-title" style="margin-bottom: 32px;">Vos questions, nos réponses</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <span class="faq-q">Qu'est-ce que Kubernetes et pourquoi est-ce important ?</span>
+        <span class="faq-chevron">›</span>
+      </div>
+      <div class="faq-item">
+        <span class="faq-q">Est-ce compatible avec mon infrastructure actuelle ?</span>
+        <span class="faq-chevron">›</span>
+      </div>
+      <div class="faq-item">
+        <span class="faq-q">Que se passe-t-il si je veux changer d'hébergeur plus tard ?</span>
+        <span class="faq-chevron">›</span>
+      </div>
+      <div class="faq-item">
+        <span class="faq-q">Combien coûte Novit concrètement ?</span>
+        <span class="faq-chevron">›</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <h2>Prêt à reprendre la maîtrise de votre infrastructure ?</h2>
+  <p>Un ingénieur analyse votre situation et vous présente une modélisation d'économies personnalisée.</p>
+  <div class="cta-buttons">
+    <button class="btn-primary">Envoyez votre facture — étude gratuite →</button>
+    <button class="btn-secondary">Demander une démo</button>
+  </div>
+</div>
+
+<footer>
+  © 2026 Novit.io — Infrastructure cloud-native souveraine · Données hébergées en France
+</footer>
+
+</body>
+</html>
