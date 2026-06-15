@@ -147,7 +147,7 @@
   <div class="hero">
     <div>
       <span class="hero-eyebrow">Back from Cloud</span>
-      <h1>Vos coûts cloud érodent votre rentabilité.<br>Reprenez la maîtrise.</h1>
+      <h1>Votre facture cloud explose.<br>Récupérez votre marge.</h1>
 
       <!-- BLOC PRIX MIS EN AVANT -->
       <div class="prix-hero">
@@ -184,6 +184,13 @@
           <select><option>1k – 5k €</option><option>5k – 20k €</option><option>+20k €</option></select>
         </div>
       </div>
+      <div class="form-group">
+        <label>Votre facture cloud <span style="font-weight:400; color:#9CA3AF;">(facultatif)</span></label>
+        <div style="border: 1.5px dashed #BFDBFE; border-radius: 6px; padding: 12px; text-align: center; background: #EFF6FF; cursor: pointer;">
+          <div style="font-size:13px; color:#3B82F6; font-weight:500; margin-bottom:2px;">Glissez votre facture ici ou cliquez</div>
+          <div style="font-size:11px; color:#9CA3AF;">PDF, PNG, JPG · Vous pouvez anonymiser les données sensibles avant envoi</div>
+        </div>
+      </div>
       <button class="form-submit">Un ingénieur vous contacte sous 48h →</button>
       <p class="form-note">Gratuit · Sans engagement · Données confidentielles</p>
     </div>
@@ -192,7 +199,7 @@
 
 <!-- BANDE 3 CHIFFRES CLÉS -->
 <div class="chiffres-wrap">
-  <div class="chiffres">
+  <div class="chiffres" style="grid-template-columns: repeat(4, 1fr);">
     <div class="chiffre-item">
       <div class="chiffre-number">2×</div>
       <div class="chiffre-label">moins cher que le cloud public</div>
@@ -207,6 +214,11 @@
       <div class="chiffre-number">&lt;1 sem.</div>
       <div class="chiffre-label">pour être opérationnel</div>
       <div class="chiffre-detail">vs 12–24 mois en interne</div>
+    </div>
+    <div class="chiffre-item">
+      <div class="chiffre-number">8 ans</div>
+      <div class="chiffre-label">en production</div>
+      <div class="chiffre-detail">TPE, ETI, grands comptes</div>
     </div>
   </div>
 </div>
@@ -246,7 +258,7 @@
 <!-- HYPERSCALERS -->
 <div style="background:#fff; border-bottom: 1px solid #E8ECF0; padding: 24px 0;">
   <div class="wrapper">
-    <p style="text-align:center; font-size:13px; color:var(--color-text-secondary); margin-bottom:16px;">Vous utilisez l'un de ces services ? Novit vous permet d'en sortir.</p>
+    <p style="text-align:center; font-size:13px; color:var(--color-text-secondary); margin-bottom:16px;">Vous venez d'AWS, d'Azure ou de GCP ? Novit vous permet d'en sortir proprement.</p>
     <div style="display:flex; justify-content:center; gap:32px; flex-wrap:wrap;">
       <div style="text-align:center; padding: 12px 20px; border: 1px solid #E5E7EB; border-radius:8px; min-width:120px;">
         <div style="font-size:18px; font-weight:700; color:#FF9900; letter-spacing:-0.5px;">AWS</div>
@@ -269,6 +281,7 @@
   <section>
     <div class="section-eyebrow">Pourquoi Novit</div>
     <div class="section-title">3 raisons de migrer hors du cloud public</div>
+    <p style="font-size:15px; color:#6B7280; margin-bottom:32px; line-height:1.6;">Pourquoi des centaines d'entreprises reviennent sur leur propre infrastructure :</p>
     <div class="args-grid">
       <div class="arg-card">
         <div class="arg-icon">⚡</div>
@@ -283,7 +296,7 @@
       <div class="arg-card">
         <div class="arg-icon">🇫🇷</div>
         <div class="arg-title">Support humain, en France</div>
-        <div class="arg-desc">Un ingénieur français intervient en moins d'1h. Pas un chatbot, pas un forum.</div>
+        <div class="arg-desc">Une équipe d'ingénieurs 100 % française intervient en moins d'1h. Pas un chatbot, pas un forum.</div>
       </div>
     </div>
   </section>
@@ -343,6 +356,8 @@
       <div class="faq-item"><span class="faq-q">Est-ce compatible avec mon infrastructure actuelle ?</span><span class="faq-chevron">›</span></div>
       <div class="faq-item"><span class="faq-q">Qu'est-ce que Kubernetes concrètement ?</span><span class="faq-chevron">›</span></div>
       <div class="faq-item"><span class="faq-q">Que se passe-t-il si je veux changer d'hébergeur ?</span><span class="faq-chevron">›</span></div>
+      <div class="faq-item"><span class="faq-q">On a un ingénieur DevOps en interne, pourquoi passer par Novit ?</span><span class="faq-chevron">›</span></div>
+      <div class="faq-item"><span class="faq-q">Je suis une petite structure : et si Novit ferme dans 2 ans ?</span><span class="faq-chevron">›</span></div>
     </div>
   </section>
 </div>
@@ -350,7 +365,7 @@
 <!-- CTA FINAL -->
 <div class="cta-final">
   <div class="cta-final-prix">Les performances du cloud public. 2× moins cher.</div>
-  <h2>Prêt à reprendre la maîtrise de votre infrastructure ?</h2>
+  <h2>Prêt à stopper les dérives cloud et récupérer votre marge ?</h2>
   <p>Un ingénieur analyse votre situation et vous présente une modélisation d'économies personnalisée.</p>
   <div class="cta-buttons">
     <button class="btn-primary">Demander un audit cloud gratuit →</button>
