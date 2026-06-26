@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novit — Back from Cloud</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #F7F8FA; color: #1A1A2E; }
+
+  nav { background: #fff; border-bottom: 1px solid #E8ECF0; padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-size: 20px; font-weight: 700; color: #185FA5; letter-spacing: -0.5px; }
+  .nav-cta { background: #185FA5; color: #fff; border: none; padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; }
+
+  .hero-wrap { background: linear-gradient(135deg, #0D3D6E 0%, #185FA5 60%, #1A7ABF 100%); }
+  .hero { max-width: 1200px; margin: 0 auto; padding: 64px 48px; display: grid; grid-template-columns: 1fr 420px; gap: 64px; align-items: start; }
+  .hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.15); color: #9DCFFF; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; }
+  .hero h1 { font-size: 36px; font-weight: 700; line-height: 1.25; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; }
+
+  .impact-hero { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 20px; }
+  .impact-hero-headline { font-size: 22px; font-weight: 800; color: #FFD700; letter-spacing: -0.5px; line-height: 1.2; }
+  .impact-hero-sub { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; line-height: 1.5; }
+
+  .hero-badges { display: flex; gap: 16px; flex-wrap: wrap; }
+  .badge { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.85); }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ADE80; flex-shrink: 0; }
+
+  .form-card { background: #fff; border-radius: 12px; padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+  .form-card h3 { font-size: 17px; font-weight: 600; color: #1A1A2E; margin-bottom: 6px; }
+  .form-card p { font-size: 13px; color: #6B7280; margin-bottom: 20px; line-height: 1.5; }
+  .form-group { margin-bottom: 12px; }
+  .form-group label { display: block; font-size: 11px; font-weight: 600; color: #374151; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .form-group input, .form-group select { width: 100%; padding: 9px 12px; border: 1.5px solid #E5E7EB; border-radius: 6px; font-size: 14px; color: #1A1A2E; background: #FAFAFA; outline: none; font-family: inherit; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-submit { width: 100%; background: #185FA5; color: #fff; border: none; padding: 13px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 6px; }
+  .form-note { text-align: center; font-size: 11px; color: #9CA3AF; margin-top: 8px; }
+
+  .chiffres-wrap { background: #fff; border-bottom: 1px solid #E8ECF0; }
+  .chiffres { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .chiffre-item { padding: 28px 20px; text-align: center; border-right: 1px solid #E8ECF0; }
+  .chiffre-item:last-child { border-right: none; }
+  .chiffre-number { font-size: 42px; font-weight: 900; letter-spacing: -2px; line-height: 1; }
+  .chiffre-item:nth-child(1) .chiffre-number { color: #185FA5; }
+  .chiffre-item:nth-child(2) .chiffre-number { color: #059669; }
+  .chiffre-item:nth-child(3) .chiffre-number { color: #D97706; }
+  .chiffre-item:nth-child(4) .chiffre-number { color: #7C3AED; }
+  .chiffre-label { font-size: 13px; color: #6B7280; margin-top: 6px; line-height: 1.4; }
+  .chiffre-detail { font-size: 11px; color: #9CA3AF; margin-top: 3px; }
+
+  .wrapper { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .section-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #185FA5; margin-bottom: 12px; }
+  .section-title { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 40px; line-height: 1.3; }
+  section { padding: 64px 0; }
+
+  .comparateur-wrap { background: linear-gradient(180deg, #EFF6FF 0%, #F7F8FA 100%); padding: 64px 0; }
+  .comp-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; align-items: center; }
+  .comp-card { border-radius: 12px; padding: 28px; }
+  .comp-aws { background: #FEF2F2; border: 2px solid #FCA5A5; }
+  .comp-novit { background: #EFF6FF; border: 2px solid #93C5FD; position: relative; }
+  .comp-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: #185FA5; color: #fff; font-size: 11px; font-weight: 700; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+  .comp-header { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+  .comp-aws .comp-header { color: #DC2626; }
+  .comp-novit .comp-header { color: #185FA5; }
+  .comp-prix { font-size: 36px; font-weight: 900; letter-spacing: -1.5px; line-height: 1; margin-bottom: 4px; }
+  .comp-aws .comp-prix { color: #B91C1C; }
+  .comp-novit .comp-prix { color: #1D4ED8; }
+  .comp-prix-label { font-size: 12px; color: #6B7280; margin-bottom: 18px; }
+  .comp-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; font-size: 13px; line-height: 1.5; }
+  .comp-aws .comp-item { color: #7F1D1D; }
+  .comp-novit .comp-item { color: #1E3A5F; }
+  .comp-arrow { text-align: center; font-size: 32px; color: #185FA5; font-weight: 900; }
+  .comp-note { font-size: 11px; color: #9CA3AF; margin-top: 12px; font-style: italic; }
+
+  .hyperscalers { background: #fff; border-top: 1px solid #E8ECF0; border-bottom: 1px solid #E8ECF0; padding: 24px 0; }
+  .hyp-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .hyp-phrase { text-align: center; font-size: 15px; color: #374151; margin-bottom: 20px; font-weight: 500; }
+  .hyp-logos { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+  .hyp-logo { text-align: center; padding: 12px 24px; border: 1px solid #E5E7EB; border-radius: 8px; min-width: 120px; }
+  .hyp-logo-name { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
+  .hyp-logo-sub { font-size: 11px; color: #9CA3AF; margin-top: 3px; }
+
+  .args-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .arg-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 10px; padding: 24px; }
+  .arg-icon { font-size: 28px; margin-bottom: 12px; }
+  .arg-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .arg-desc { font-size: 13px; color: #6B7280; line-height: 1.6; }
+
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .testi-card { background: #fff; border: 1px solid #E5E7EB; border-radius: 10px; padding: 24px; }
+  .testi-gain { display: inline-block; background: #EFF6FF; color: #1D4ED8; font-size: 18px; font-weight: 900; padding: 7px 14px; border-radius: 8px; margin-bottom: 14px; }
+  .testi-quote { font-size: 14px; line-height: 1.65; color: #374151; font-style: italic; margin-bottom: 16px; }
+  .testi-author { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar { width: 32px; height: 32px; border-radius: 50%; background: #DBEAFE; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #1D4ED8; }
+  .testi-name { font-size: 12px; font-weight: 600; }
+  .testi-role { font-size: 11px; color: #9CA3AF; }
+
+  .cred-section { background: #1A1A2E; padding: 40px 0; }
+  .cred-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+  .cred-icon { font-size: 24px; margin-bottom: 8px; }
+  .cred-label { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+
+  .faq-list { max-width: 720px; }
+  .faq-item { border-bottom: 1px solid #E5E7EB; padding: 18px 0; display: flex; justify-content: space-between; align-items: center; }
+  .faq-q { font-size: 14px; font-weight: 500; }
+  .faq-chevron { color: #9CA3AF; }
+
+  .cta-final { background: linear-gradient(135deg, #185FA5, #0D3D6E); padding: 64px 48px; text-align: center; color: #fff; }
+  .cta-final-prix { font-size: 28px; font-weight: 900; color: #FFD700; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .cta-final h2 { font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+  .cta-final p { font-size: 15px; color: rgba(255,255,255,0.75); margin-bottom: 28px; }
+  .btn-primary { background: #FFD700; color: #0D3D6E; border: none; padding: 14px 28px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+
+  footer { background: #0D3D6E; color: rgba(255,255,255,0.4); padding: 20px 48px; font-size: 12px; text-align: center; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">novit.io</span>
+  <button class="nav-cta">Demander un audit gratuit</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+    <div>
+      <span class="hero-eyebrow">Back from Cloud</span>
+      <h1>Votre facture cloud explose.<br>Récupérez votre marge.</h1>
+      <div class="impact-hero">
+        <div style="font-size:40px; flex-shrink:0;">⚡</div>
+        <div>
+          <div class="impact-hero-headline">Les performances du cloud public.<br>2× moins cher. 100 % souverain.</div>
+          <div class="impact-hero-sub">Compatible AWS, Azure, GCP — et sans dépendance à aucun d'eux.</div>
+        </div>
+      </div>
+      <div class="hero-badges">
+        <div class="badge"><span class="badge-dot"></span>Aucune dépendance AWS, Azure ou GCP</div>
+        <div class="badge"><span class="badge-dot"></span>Experts français H24/7</div>
+        <div class="badge"><span class="badge-dot"></span>Sans engagement</div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h3>Demandez votre audit cloud gratuit</h3>
+      <p>Un expert vous contacte pour un audit et vous présente une modélisation d'économies personnalisée.</p>
+      <div class="form-row">
+        <div class="form-group"><label>Prénom</label><input type="text" placeholder="Jean"></div>
+        <div class="form-group"><label>Nom</label><input type="text" placeholder="Martin"></div>
+      </div>
+      <div class="form-group"><label>Email professionnel</label><input type="email" placeholder="jean@entreprise.fr"></div>
+      <div class="form-group"><label>Entreprise</label><input type="text" placeholder="Votre société"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cloud utilisé</label>
+          <select><option>AWS</option><option>Azure</option><option>GCP</option><option>Autre</option></select>
+        </div>
+        <div class="form-group">
+          <label>Budget cloud/mois</label>
+          <select><option>moins de 1k€</option><option>1k–5k€</option><option>5k–20k€</option><option>+20k€</option></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Facture cloud <span style="font-weight:400; color:#9CA3AF;">(facultatif)</span></label>
+        <div style="border:1.5px dashed #BFDBFE; border-radius:6px; padding:12px; text-align:center; background:#EFF6FF; cursor:pointer;">
+          <div style="font-size:13px; color:#3B82F6; font-weight:500; margin-bottom:2px;">Glissez votre facture ici ou cliquez</div>
+          <div style="font-size:11px; color:#9CA3AF;">PDF, PNG, JPG · Vous pouvez anonymiser les données sensibles avant envoi</div>
+        </div>
+      </div>
+      <button class="form-submit">Un expert vous contacte pour un audit →</button>
+      <p class="form-note">Gratuit · Sans engagement · Données confidentielles</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHIFFRES -->
+<div class="chiffres-wrap">
+  <div class="chiffres">
+    <div class="chiffre-item">
+      <div class="chiffre-number">2×</div>
+      <div class="chiffre-label">moins cher que le cloud public</div>
+      <div class="chiffre-detail">À performances équivalentes</div>
+    </div>
+    <div class="chiffre-item">
+      <div class="chiffre-number">-50%</div>
+      <div class="chiffre-label">d'OPEX en moyenne</div>
+      <div class="chiffre-detail">Constaté en production</div>
+    </div>
+    <div class="chiffre-item">
+      <div class="chiffre-number">8 ans</div>
+      <div class="chiffre-label">en production</div>
+      <div class="chiffre-detail">TPE, ETI, grands comptes</div>
+    </div>
+    <div class="chiffre-item">
+      <div class="chiffre-number">&lt; 1h</div>
+      <div class="chiffre-label">délai d'intervention expert</div>
+      <div class="chiffre-detail">Support H24/7</div>
+    </div>
+  </div>
+</div>
+
+<!-- HYPERSCALERS -->
+<div class="hyperscalers">
+  <div class="hyp-inner">
+    <p class="hyp-phrase">Vous venez d'AWS, d'Azure ou de GCP ? Novit vous permet d'en sortir proprement.</p>
+    <div class="hyp-logos">
+      <div class="hyp-logo"><div class="hyp-logo-name" style="color:#FF9900;">AWS</div><div class="hyp-logo-sub">Amazon Web Services</div></div>
+      <div class="hyp-logo"><div class="hyp-logo-name" style="color:#0078D4;">Azure</div><div class="hyp-logo-sub">Microsoft Azure</div></div>
+      <div class="hyp-logo"><div class="hyp-logo-name" style="color:#4285F4;">GCP</div><div class="hyp-logo-sub">Google Cloud Platform</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARATEUR -->
+<div class="comparateur-wrap">
+  <div class="wrapper">
+    <div class="section-eyebrow">Comparaison</div>
+    <div class="section-title">Ce que vous payez vraiment — et ce que vous pourriez payer</div>
+    <div class="comp-grid">
+      <div class="comp-card comp-aws">
+        <div class="comp-header">☁️ Cloud public (AWS, Azure, GCP)</div>
+        <div class="comp-prix">10 000 €</div>
+        <div class="comp-prix-label">exemple client SaaS · à titre illustratif</div>
+        <div class="comp-item">❌ Facturation variable, imprévisible</div>
+        <div class="comp-item">❌ Dépendance totale à AWS, Azure ou GCP</div>
+        <div class="comp-item">❌ Support : forums et chatbots</div>
+        <div class="comp-item">❌ Données hébergées hors de France</div>
+        <div class="comp-note">* Fourchette à valider selon votre situation</div>
+      </div>
+      <div class="comp-arrow">→</div>
+      <div class="comp-card comp-novit" style="position:relative;">
+        <div class="comp-badge">✦ AVEC NOVIT</div>
+        <div class="comp-header" style="margin-top:10px;">🇫🇷 Novit — Cloud-native souverain</div>
+        <div class="comp-prix">~5 000 €</div>
+        <div class="comp-prix-label">serveurs OVH + abonnement Novit · à titre illustratif</div>
+        <div class="comp-item">✅ Budget fixe et prévisible</div>
+        <div class="comp-item">✅ Indépendance totale, zéro vendor lock-in</div>
+        <div class="comp-item">✅ Expert français dédié, intervention &lt; 1h</div>
+        <div class="comp-item">✅ Données hébergées en France</div>
+        <div class="comp-note">* Votre modélisation personnalisée suite à l'audit</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARGUMENTS -->
+<div class="wrapper">
+  <section>
+    <div class="section-eyebrow">Pourquoi Novit</div>
+    <div class="section-title">3 raisons de migrer hors du cloud public</div>
+    <div class="args-grid">
+      <div class="arg-card">
+        <div class="arg-icon">⚡</div>
+        <div class="arg-title">Accompagné pas à pas</div>
+        <div class="arg-desc">Nos experts déploient votre infrastructure cloud-native sur vos serveurs. Formation incluse, sans interrompre votre production.</div>
+      </div>
+      <div class="arg-card">
+        <div class="arg-icon">🔓</div>
+        <div class="arg-title">Aucun vendor lock-in</div>
+        <div class="arg-desc">100 % open source. Vous pouvez changer d'hébergeur en quelques heures. Novit ne vous rend pas dépendant.</div>
+      </div>
+      <div class="arg-card">
+        <div class="arg-icon">🇫🇷</div>
+        <div class="arg-title">Support humain, en France</div>
+        <div class="arg-desc">Un expert français intervient en moins d'1h. Pas un chatbot, pas un forum — quelqu'un qui connaît votre infrastructure.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TÉMOIGNAGES -->
+<div style="background:#F7F8FA; padding:64px 0;">
+  <div class="wrapper">
+    <div class="section-eyebrow">Résultats clients</div>
+    <div class="section-title" style="margin-bottom:32px;">Des économies constatées, pas estimées</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-gain">OPEX -40 à -66 %</div>
+        <p class="testi-quote">« Nous avons réduit nos coûts d'exploitation significativement en quelques semaines. L'équipe Novit a géré toute la migration sans interrompre notre production. »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div><div class="testi-name">Un CEO</div><div class="testi-role">Startup SaaS</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-gain">Budget fixe maîtrisé</div>
+        <p class="testi-quote">« On avait des contraintes on-premise strictes. Novit a déployé notre infrastructure cloud-native sur nos propres serveurs, sans équipe dédiée de notre côté. »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">T</div>
+          <div><div class="testi-name">Un DSI</div><div class="testi-role">ETI industrielle</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-gain">+530 % perf. vs Azure</div>
+        <p class="testi-quote">« La sortie des cycles en V que nous n'arrivions pas à faire depuis 3 ans. Novit l'a fait en quelques semaines avec une équipe restreinte. »</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div><div class="testi-name">Un DSI</div><div class="testi-role">Grande entreprise industrielle</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CRÉDIBILITÉ -->
+<div class="cred-section">
+  <div class="cred-inner">
+    <div><div class="cred-icon">📅</div><div class="cred-label">8 ans en production</div></div>
+    <div><div class="cred-icon">🏆</div><div class="cred-label">Core member Kubernetes<br>Mikael Cluseau</div></div>
+    <div><div class="cred-icon">🤝</div><div class="cred-label">Partenariat Deloitte</div></div>
+    <div><div class="cred-icon">🕐</div><div class="cred-label">Support H24/7<br>experts français</div></div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="wrapper">
+  <section>
+    <div class="section-eyebrow">Questions fréquentes</div>
+    <div class="section-title" style="margin-bottom:28px;">Vos questions, nos réponses</div>
+    <div class="faq-list">
+      <div class="faq-item"><span class="faq-q">Comment Novit peut-il coûter 2× moins cher que le cloud public ?</span><span class="faq-chevron">›</span></div>
+      <div class="faq-item"><span class="faq-q">Est-ce compatible avec mon infrastructure actuelle ?</span><span class="faq-chevron">›</span></div>
+      <div class="faq-item"><span class="faq-q">Qu'est-ce que Kubernetes concrètement ?</span><span class="faq-chevron">›</span></div>
+      <div class="faq-item"><span class="faq-q">Que se passe-t-il si je veux changer d'hébergeur ?</span><span class="faq-chevron">›</span></div>
+      <div class="faq-item"><span class="faq-q">On a un expert DevOps en interne, pourquoi passer par Novit ?</span><span class="faq-chevron">›</span></div>
+      <div class="faq-item"><span class="faq-q">Je suis une petite structure : et si Novit ferme dans 2 ans ?</span><span class="faq-chevron">›</span></div>
+    </div>
+  </section>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <div class="cta-final-prix">Les performances du cloud public. 2× moins cher.</div>
+  <h2>Prêt à stopper les dérives cloud et récupérer votre marge ?</h2>
+  <p>Un expert analyse votre situation et vous présente une modélisation d'économies personnalisée.</p>
+  <button class="btn-primary">Demander un audit cloud gratuit →</button>
+</div>
+
+<footer>© 2026 Novit.io — Infrastructure cloud-native souveraine · Données hébergées en France</footer>
+</body>
+</html>
